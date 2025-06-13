@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AntAwake</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/x-icon" href="/image/antawake.png" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="image/antawake.png" alt="Logo">
+        </div>
+    </header>
+
+    <main>
+        <div class="detail-content">
+            <h2 id="detailTitle"></h2>
+            <img id="detailImage" src="" alt="Hình ảnh" style="max-width: 100%; border-radius: 5px;">
+            <p id="detailDescription"></p>
+            <div class="detail-extra">
+                <h3>Thông tin bổ sung</h3>
+                <p id="extraInfo"></p>
+                <a href="#" id="relatedLink">Xem thêm thông tin liên quan</a>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-text">
+            <p>Tổng biên tập: Giang Quốc Khánh</p>
+            <p>© 2025 Báo Mới. All rights reserved.</p>
+            <p>Email: webmaster@vnexpress.net</p>
+        </div>
+    </footer>
+
+    <script>
+        // Lấy tham số từ URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const menu = decodeURIComponent(urlParams.get('menu') || '');
+        const section = urlParams.get('section');
+        const title = decodeURIComponent(urlParams.get('title') || '');
+
+        // Dữ liệu từ contentMap hoặc staticContent
+        const contentMap = {
+            "Địa Điểm": {
+                mainContent: { imageSrc: "image/tu.png", title: "Khám phá địa điểm nổi bật tại Việt Nam", description: "Các địa danh nổi tiếng và phong cảnh tuyệt đẹp đang chờ bạn khám phá.", extra: "Địa điểm này là di sản văn hóa thế giới." },
+                imgtilte2_1: { imageSrc: "image/chùa.png", title: "Chùa Ông Bổn", description: "Chùa Ông Bổn tại quận 5, TP.HCM, là ngôi chùa lâu đời của người Hoa.", extra: "Được xây dựng vào thế kỷ 19." },
+                imgtilte2_2: { imageSrc: "image/hoguom.png", title: "Hồ Gươm", description: "Hồ Gươm, biểu tượng của Hà Nội với Tháp Rùa và cầu Húc.", extra: "Nơi gắn liền với truyền thuyết Thánh Gióng." },
+                imgtilte3_1: { imageSrc: "image/halong.png", title: "Vịnh Hạ Long", description: "Vịnh Hạ Long, di sản UNESCO với hàng ngàn đảo đá vôi.", extra: "Có hơn 1.600 đảo lớn nhỏ." },
+                imgtilte3_2: { imageSrc: "image/hoian.png", title: "Phố Cổ Hội An", description: "Phố cổ Hội An với đèn lồng rực rỡ và kiến trúc cổ kính.", extra: "Được UNESCO công nhận năm 1999." }
+            },
+            "Văn Hóa": {
+                mainContent: { imageSrc: "image/vanhoa.png", title: "Nét đẹp văn hóa Việt Nam", description: "Tìm hiểu truyền thống và phong tục tập quán đa dạng trên khắp đất nước.", extra: "Văn hóa Việt Nam phong phú và đa dạng." },
+                imgtilte2_1: { imageSrc: "image/aodai.png", title: "Áo Dài", description: "Áo dài, trang phục truyền thống biểu tượng của phụ nữ Việt Nam.", extra: "Thường được mặc trong các dịp lễ hội." },
+                imgtilte2_2: { imageSrc: "image/festival.png", title: "Lễ Hội", description: "Các lễ hội dân gian mang đậm bản sắc văn hóa Việt.", extra: "Lễ hội chùa Hương là một ví dụ nổi bật." },
+                imgtilte3_1: { imageSrc: "image/nharong.png", title: "Nhà Rông", description: "Nhà Rông, kiến trúc đặc trưng của người Tây Nguyên.", extra: "Thường làm từ gỗ và tre." },
+                imgtilte3_2: { imageSrc: "image/music.png", title: "Nhạc Dân Tộc", description: "Âm nhạc dân tộc với các nhạc cụ truyền thống độc đáo.", extra: "Đàn bầu là nhạc cụ tiêu biểu." }
+            },
+            "Ẩm Thực": {
+                mainContent: { imageSrc: "image/amthuc.png", title: "Ẩm thực phong phú ba miền", description: "Những món ăn đặc sản đặc trưng của từng vùng miền Việt Nam.", extra: "Ẩm thực Việt Nam nổi tiếng với hương vị đậm đà." },
+                imgtilte2_1: { imageSrc: "image/pho.png", title: "Phở", description: "Phở, món ăn quốc hồn quốc túy của Việt Nam.", extra: "Có thể ăn với thịt bò hoặc gà." },
+                imgtilte2_2: { imageSrc: "image/banhmi.png", title: "Bánh Mì", description: "Bánh mì Việt Nam, món ăn đường phố nổi tiếng thế giới.", extra: "Thường kết hợp pate và rau sống." },
+                imgtilte3_1: { imageSrc: "image/bunbo.png", title: "Bún Bò Huế", description: "Bún bò Huế với hương vị cay nồng đặc trưng.", extra: "Nguyên liệu chính là thịt bò và giò heo." },
+                imgtilte3_2: { imageSrc: "image/comtam.png", title: "Cơm Tấm", description: "Cơm tấm Sài Gòn, món ăn dân dã đậm đà.", extra: "Thường ăn với sườn nướng và trứng ốp la." }
+            }
+        };
+
+        const staticContent = {
+            PostCard: [{ title: "Chào mừng đến với PostCard", description: "Thiết kế và gửi những tấm bưu thiếp độc đáo để chia sẻ cảm xúc!", imageSrc: "image/postcard1.png", extra: "Hỗ trợ gửi qua email." }],
+            WebBlog: [{ title: "Tiêu đề bài viết 1", description: "Đoạn trích của bài viết blog 1...", imageSrc: "image/default.png", extra: "Bài viết được cập nhật hàng tuần." }],
+            Video: [{ title: "Tiêu đề Video 1", description: "Nội dung Video 1", imageSrc: "image/video1.jpg", extra: "Video dài 5 phút." }]
+        };
+
+        // Tìm nội dung dựa trên section và title
+        let content = null;
+        if (contentMap[menu] && contentMap[menu][section]) {
+            content = contentMap[menu][section];
+        } else if (staticContent[menu]) {
+            content = staticContent[menu].find(item => item.title === title);
+        }
+
+        // Hiển thị nội dung
+        if (content) {
+            document.getElementById('detailTitle').textContent = content.title;
+            document.getElementById('detailImage').src = content.imageSrc;
+            document.getElementById('detailDescription').textContent = content.description;
+            document.getElementById('extraInfo').textContent = content.extra || 'Không có thông tin bổ sung.';
+            document.getElementById('relatedLink').href = `https://vi.wikipedia.org/wiki/${encodeURIComponent(content.title)}`;
+        } else {
+            document.querySelector('.detail-content').innerHTML = '<p>Không tìm thấy nội dung chi tiết.</p>';
+        }
+    </script>
+</body>
+</html>

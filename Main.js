@@ -343,3 +343,153 @@ items.forEach((item) => {
         }
     });
 });
+
+
+// ... (giữ nguyên code hiện tại từ đầu đến hết phần items.forEach)
+
+// Thêm chức năng tìm kiếm
+const searchInput = document.querySelector('.search-bar input');
+const searchButton = document.querySelector('.search-bar .search-btn');
+const clearButton = document.querySelector('.search-bar .clear-search');
+
+function performSearch() {
+    const keyword = searchInput.value.trim();
+    if (keyword) {
+        window.location.href = `search.html?q=${encodeURIComponent(keyword)}`;
+    } else {
+        initializeContent();
+    }
+}
+
+// Sự kiện input để hiển thị/ẩn nút xóa
+searchInput.addEventListener('input', () => {
+    clearButton.style.display = searchInput.value ? 'block' : 'none';
+});
+
+// Sự kiện xóa tìm kiếm
+clearButton.addEventListener('click', () => {
+    searchInput.value = '';
+    clearButton.style.display = 'none';
+    initializeContent();
+});
+
+// Sự kiện click nút tìm kiếm
+searchButton.addEventListener('click', performSearch);
+searchButton.addEventListener('touchstart', performSearch);
+
+// Sự kiện nhấn Enter trong input
+searchInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+        performSearch();
+    }
+});
+
+// Xử lý hash khi tải trang
+window.addEventListener('DOMContentLoaded', () => {
+    initializeContent();
+    const hash = decodeURIComponent(window.location.hash.slice(1));
+    const urlParams = new URLSearchParams(window.location.search);
+    const section = urlParams.get('section');
+    const title = decodeURIComponent(urlParams.get('title') || '');
+
+    if (hash) {
+        const menuItem = Array.from(items).find(i => i.textContent.trim() === hash);
+        if (menuItem) {
+            menuItem.click();
+            // Cuộn đến nội dung cụ thể
+            if (section && title) {
+                let targetElement;
+                if (section === 'mainContent') {
+                    targetElement = document.querySelector('#mainContent');
+                } else if (section === 'imgtilte2_1' || section === 'imgtilte2_2') {
+                    const index = section === 'imgtilte2_1' ? 0 : 1;
+                    targetElement = document.querySelectorAll('.imgtilte-2')[index];
+                } else if (section === 'imgtilte3_1' || section === 'imgtilte3_2') {
+                    const index = section === 'imgtilte3_1' ? 0 : 1;
+                    targetElement = document.querySelectorAll('.imgtilte-3')[index];
+                } else if (section === 'postcard') {
+                    targetElement = document.querySelector('#postCardContent');
+                } else if (section === 'weblog') {
+                    targetElement = document.querySelector('#webBlogContent');
+                } else if (section === 'video') {
+                    targetElement = document.querySelector('#videoContent');
+                }
+
+                if (targetElement) {
+                    setTimeout(() => {
+                        targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }, 100); // Delay để đảm bảo DOM đã cập nhật
+                }
+            }
+        }
+    }
+});
+
+
+window.addEventListener('DOMContentLoaded', () => {
+    // Hàm giả lập để hiển thị nội dung (nếu bạn có logic menu)
+    function showContent(section) {
+        const sections = {
+            'Địa Điểm': document.querySelector('.background-text'),
+            'Văn Hoá': document.querySelector('.background-text'), // Cần thêm logic riêng nếu khác
+            'Ẩm Thực': document.querySelector('.background-text'), // Cần thêm logic riêng nếu khác
+            'WebBlog': document.querySelector('.weblog-content'),
+            'Video': document.querySelector('.video-content'),
+            'PostCard': document.querySelector('.postcard-content')
+        };
+
+        Object.values(sections).forEach(s => s.style.display = 'none');
+        if (sections[section]) sections[section].style.display = 'block';
+    }
+
+    // Lấy hash từ URL (ví dụ: #Địa Điểm)
+    const hash = decodeURIComponent(window.location.hash.slice(1));
+    const urlParams = new URLSearchParams(window.location.search);
+    const section = urlParams.get('section');
+    const title = decodeURIComponent(urlParams.get('title') || '');
+
+    if (hash) {
+        // Kích hoạt menu (giả sử .choosecontent li là menu)
+        const menuItem = Array.from(document.querySelectorAll('.choosecontent li')).find(item => item.textContent.trim() === hash);
+        if (menuItem) {
+            menuItem.classList.add('active'); // Thêm class active để đánh dấu
+            showContent(hash); // Hiển thị nội dung tương ứng
+        }
+
+        // Xác định phần tử để cuộn đến dựa trên section
+        let targetElement;
+        if (section === 'mainContent') {
+            targetElement = document.querySelector('#mainContent');
+        } else if (section.startsWith('imgtilte2')) {
+            const index = section === 'imgtilte2_1' ? 0 : 1;
+            targetElement = document.querySelectorAll('.imgtilte-2')[index];
+        } else if (section.startsWith('imgtilte3')) {
+            const index = section === 'imgtilte3_1' ? 0 : 1;
+            targetElement = document.querySelectorAll('.imgtilte-3')[index];
+        } else if (section === 'postCardContent') {
+            targetElement = document.querySelector('#postCardContent');
+        } else if (section === 'webBlogContent') {
+            targetElement = document.querySelector('#webBlogContent');
+        } else if (section === 'videoContent') {
+            targetElement = document.querySelector('#videoContent');
+        }
+
+        // Cuộn đến phần tử nếu tìm thấy
+        if (targetElement) {
+            setTimeout(() => {
+                targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                // Đảm bảo phần tử hiển thị nếu bị ẩn
+                targetElement.style.display = 'block';
+            }, 200); // Tăng delay để DOM và CSS có thời gian cập nhật
+        }
+    }
+
+    // Thêm sự kiện click cho menu để chuyển đổi nội dung
+    document.querySelectorAll('.choosecontent li').forEach(item => {
+        item.addEventListener('click', () => {
+            const section = item.textContent.trim();
+            showContent(section);
+            window.history.pushState({}, document.title, `#${encodeURIComponent(section)}`);
+        });
+    });
+});

@@ -66,14 +66,16 @@ header {
 
 /* Club Section */
 .clb b {
-  top: -58px;
+  position: relative;
+  top: -133px;
   left: -14px;
   font-size: 18px;
 }
 
 .clb img {
+  position: relative;
   width: 100px;
-  top: 1px;
+  top: -58px;
   left: 3px;
 }
 
@@ -90,7 +92,7 @@ header {
 .hamburger-menu {
   list-style: none;
   cursor: pointer;
-  margin: 236px 0 0 1423px;
+  margin: 145px 0 0 1423px;
   width: 50px;
 }
 
@@ -171,40 +173,80 @@ ul.active li:nth-child(3) {
 }
 
 /* Search Bar */
+/* Search Bar */
 .search-bar {
+  position: relative;
+  margin: 0px auto;
+  width: 90%;
+  max-width: 450px;
   display: flex;
   align-items: center;
-  background: white;
+  background: linear-gradient(135deg, #ffffff, #f0f0f0);
   border: 2px solid #ccc;
   border-radius: 50px;
-  padding: 5px 10px;
-  width: 419px;
-  height: 45px;
-  position: absolute;
-  top: 343px;
-  left: 33px;
-  transform: translateY(-50%);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 8px 12px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+  top: 300px;
+  left: -476px;
 }
-
+.search-bar:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  transform: translateY(-2px);
+}
 .search-bar input {
   border: none;
   outline: none;
   font-size: 16px;
-  padding: 5px;
+  padding: 8px 10px;
   flex: 1;
+  background: transparent;
+  color: #333;
+  transition: background 0.3s ease;
 }
-
+.search-bar input:focus {
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 20px;
+}
 .search-bar button {
   background: none;
   border: none;
   cursor: pointer;
-  padding: 5px;
+  padding: 8px;
+  font-size: 18px;
+  color: #555;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+.search-bar .search-btn:hover,
+.search-bar .clear-search:hover {
+  color: #2c3e50;
+  transform: scale(1.2);
+}
+.search-bar .clear-search {
+  display: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.search-bar .clear-search.visible {
+  display: block;
+  opacity: 1;
 }
 
-.search-bar button img {
-  width: 20px;
-  height: 20px;
+/* Media Queries for Mobile */
+@media screen and (max-width: 768px) {
+  .search-bar {
+    width: 95%;
+    padding: 6px 8px;
+    max-width: 350px;
+  }
+  .search-bar input {
+    font-size: 14px;
+    padding: 6px 8px;
+  }
+  .search-bar button {
+    font-size: 16px;
+    padding: 6px;
+  }
 }
 
 /* Content Section */
@@ -237,8 +279,8 @@ ul.active li:nth-child(3) {
 .choosecontent span {
   position: absolute;
   top: 22px;
-  left: 0; 
-    width: 0;
+  left: 0;
+  width: 0;
   height: 56%;
   border-radius: 10px;
   background-color: white;
@@ -259,12 +301,11 @@ ul.active li:nth-child(3) {
   border-radius: 10px;
   top: 13px;
   box-shadow: 0 1px 12px 14px rgba(0, 0, 0, 0.145);
-
 }
 
-.background-text{
+.background-text {
   background-color: rgb(5, 195, 195);
-   width: auto;
+  width: auto;
   height: 200px;
 }
 
@@ -285,13 +326,12 @@ ul.active li:nth-child(3) {
   gap: 20px;
   padding: 20px;
   border-radius: 10px;
-    box-shadow: 0 1px 12px 14px rgba(0, 0, 0, 0.145);
-
+  box-shadow: 0 1px 12px 14px rgba(0, 0, 0, 0.145);
 }
-.background-text-2{
+.background-text-2 {
   background-color: rgb(5, 195, 195);
-   width: auto;
-    height: 400px;
+  width: auto;
+  height: 400px;
 }
 
 .imgtilte-2 img {
@@ -309,7 +349,6 @@ ul.active li:nth-child(3) {
   width: 80%;
   margin: 30px auto;
   top: 41px;
-  
 }
 
 .imgtilte-3 {
@@ -344,13 +383,14 @@ ul.active li:nth-child(3) {
 }
 
 .imgtilte-3-container {
-
   justify-content: center;
   align-items: flex-start;
   gap: 20px;
   width: 80%;
   margin: 30px auto;
-  background-color: rgb(5, 195, 195); width: auto; height: 350px; 
+  background-color: rgb(5, 195, 195);
+  width: auto;
+  height: 350px;
 }
 
 .text-content-0 {
@@ -411,7 +451,7 @@ footer {
   padding: 50px 0;
   background-color: aqua;
   text-align: center;
-  box-shadow: inset 1px 12px 14px rgba(0, 0, 0, 0.145)
+  box-shadow: inset 1px 12px 14px rgba(0, 0, 0, 0.145);
 }
 
 .footer-links {
@@ -495,9 +535,9 @@ footer {
   animation: fadeIn 0.5s ease;
 }
 
-
 /* Kiểu dáng chung cho WebBlog và Video */
-.weblog-content, .video-content {
+.weblog-content,
+.video-content {
   width: 80%;
   margin: 30px auto;
   background: #fff;
@@ -557,6 +597,40 @@ footer {
 }
 
 /* Hiệu ứng animation cho WebBlog và Video */
-.weblog-content.active, .video-content.active {
+.weblog-content.active,
+.video-content.active {
   animation: fadeIn 0.5s ease;
 }
+
+
+.background-text, .postcard-content, .weblog-content, .video-content {
+    display: none; /* Ẩn mặc định, sẽ được hiển thị bằng JS */
+}
+
+.background-text.active, .postcard-content.active, .weblog-content.active, .video-content.active {
+    display: block;
+}
+
+.imgtilte-2, .imgtilte-3 {
+    margin: 20px 0;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+.detail-content {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+.detail-content h2 {
+    color: #333;
+    margin-bottom: 10px;
+}
+.detail-content p {
+    color: #666;
+    line-height: 1.6;
+}
+
