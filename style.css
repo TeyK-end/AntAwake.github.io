@@ -276,11 +276,16 @@ ul.active li:nth-child(3) {
   cursor: pointer;
 }
 
+
+.choosecontent {
+    position: relative;
+}
+
 .choosecontent span {
   position: absolute;
   top: 22px;
-  left: 0;
-  width: 0;
+  left: 159.825px;
+  width: 120.225px;
   height: 56%;
   border-radius: 10px;
   background-color: white;
@@ -603,12 +608,27 @@ footer {
 }
 
 
-.background-text, .postcard-content, .weblog-content, .video-content {
-    display: none; /* Ẩn mặc định, sẽ được hiển thị bằng JS */
+.background-text {
+    display: none; /* Giữ ẩn nếu cần */
 }
 
-.background-text.active, .postcard-content.active, .weblog-content.active, .video-content.active {
-    display: block;
+.postcard-content,
+.weblog-content,
+.video-content {
+    display: block; /* Hiển thị mặc định */
+    width: 80%;
+    margin: 30px auto;
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.postcard-content.active,
+.weblog-content.active,
+.video-content.active {
+    animation: fadeIn 0.5s ease;
 }
 
 .imgtilte-2, .imgtilte-3 {
